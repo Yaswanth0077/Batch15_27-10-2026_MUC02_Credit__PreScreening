@@ -1,3 +1,4 @@
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -60,7 +61,8 @@ COLORS = {
 # ─── DATA LOADING ──────────────────────────────────────────────────────────
 @st.cache_data
 def load_and_clean():
-    df = pd.read_csv('MUC02_Credit_PreScreening_Dataset 1.csv')
+    BASE_DIR = Path(__file__).resolve().parent
+    df = pd.read_csv(BASE_DIR / "MUC02_Credit_PreScreening_Dataset 1.csv")
     df['monthly_income'] = df.groupby('employment_type')['monthly_income'].transform(
         lambda x: x.fillna(x.median()))
     df['is_ntc'] = (df['credit_score'].isna()).astype(int)
