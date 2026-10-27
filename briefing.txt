@@ -1,0 +1,104 @@
+=== SLIDE 1 ===
+Calibo AI Academy  ·  Path 2  ·  KLU Batch
+MUC02 — Trainer Briefing
+Credit Pre-Screening Engine — Loan Intake Optimisation
+Phase 2  ·  Supervised Learning Part 1  ·  BFSI — Retail Lending
+15–30 min
+Briefing length
+7 steps
+Analytical tasks
+2 files
+To share
+BFSI
+Industry
+=== SLIDE 2 ===
+THE BUSINESS STORY
+Who you are building this model for
+A mid-size private bank receives about 3,000 personal loan applications a month. Every one gets a 25-minute manual review, and nearly half end up declined — many for reasons visible in the first minute. The Head of Retail Lending has asked the Credit Policy Analyst: can a model pre-screen applications so analysts spend their time where judgement is needed?
+She needs two things from you:
+1.  A model the credit team can trust
+What drives decisions today? How well can a model predict them? Where does it fail?
+2.  A threshold the bank can defend
+How many applications can be auto-declined while wrongly declining no more than 5% of good customers — and what is that worth in analyst hours?
+2
+=== SLIDE 3 ===
+"The day you understand the value of the work you do,
+is the day you add more value to the work you do."
+What this means for this use case:
+A confusion matrix is not a score. Every false positive is a creditworthy customer turned away. Students should be able to say how many.
+The threshold is a business decision. The bank sets the risk limit; the model only tells you where that limit falls.
+Fairness is part of the job, not an add-on. Leaving gender out of the model does not, on its own, make the model fair.
+=== SLIDE 4 ===
+SEVEN STEPS
+One continuous story — each step builds on the previous
+5.1  Load, inspect & clean
+Missing incomes, blank credit scores, 12 annual incomes. Every decision written down.
+5.2  What drives approval?
+Approval by credit score band and employment type. Find the 650 cliff.
+5.3  Affordability features  ★
+Build FOIR, loan-to-income, NTC flag. Find the FOIR cliff.
+5.4  Logistic regression
+Predict Declined. Confusion matrix and coefficients in business language.
+5.5  Auto-decline threshold  ★
+Threshold table, 5% wrong-decline rule, applications and hours per month.
+5.6  Fairness check
+Approval by gender, within employment type, and from the model.
+5.7  Credit Policy Briefing  ★
+4–6 sentences. Threshold, hours, drivers, NTC caveat, fairness.
+★  Most important steps
+4
+=== SLIDE 5 ===
+CBIM PROBLEM CANVAS
+Before any code — 15 to 20 minutes
+Complete the canvas before touching the data. This is not optional.
+Situation (S)
+~3,000 applications a month, each reviewed manually for ~25 minutes.
+Complication (C)
+Analyst time spent on clear-cut declines; good applicants wait longer.
+Question (Q)
+Not "build a model" — which applications can safely leave manual review, and at what threshold?
+SSOT
+The dataset — and the decision column is past analyst judgement, not repayment.
+Success definition
+A threshold within the 5% risk limit and a stated number of hours freed.
+Stakeholder
+Credit Policy Analyst — and the analysts and applicants affected.
+5
+=== SLIDE 6 ===
+WHAT GOOD WORK LOOKS LIKE
+The difference between passing and distinction
+6
+=== SLIDE 7 ===
+FILES AND SETUP
+Two files — both go in the same folder as the notebook
+Student document
+MUC02_KLU_Credit_PreScreening.docx  —  full instructions, deliverables, CBIM canvas and submission checklist
+Dataset
+MUC02_Credit_PreScreening_Dataset.csv  —  12,000 applications  ·  19 columns  ·  Apr–Sep 2026  ·  cities across India
+Setup — if not already installed:
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+7
+=== SLIDE 8 ===
+DELIVERABLES
+What to submit
+Individual
+Group of 2–3
+[YourName]_MUC02_KLU_Notebook.ipynb
+CBIM canvas at top  →  Steps 5.1 through 5.7
+Runs end-to-end — kernel restart + run all cells tested
+[YourName]_MUC02_KLU_Summary.docx (max 400 words)
+[TeamName]_MUC02_KLU_Notebook.ipynb — each step credits who built it
+CBIM canvas completed together — all members contributed
+[TeamName]_MUC02_KLU_Summary.docx (max 500 words)
+150-word individual reflection from each member — submitted separately
+Deadline: to be confirmed — update the student document before distributing.
+8
+=== SLIDE 9 ===
+Three things before you start
+1
+CBIM canvas first. Every time. Before any code.
+2
+The threshold is the answer. Use the table, apply the 5% rule, and state what it frees up in applications and hours.
+3
+Some applicants should always see a human. Find out who, and say so in your briefing.
+Any questions before we begin?

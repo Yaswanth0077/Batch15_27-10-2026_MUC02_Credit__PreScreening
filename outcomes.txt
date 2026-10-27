@@ -1,0 +1,120 @@
+=== SLIDE 1 ===
+Calibo AI Academy  ·  Path 2  ·  KLU Batch
+MUC02 — Expected Outcomes
+Credit Pre-Screening Engine — what a strong submission found
+Use this deck to check your own notebook step by step. Your numbers will differ slightly depending on the cleaning choices you made — within about 2–3 percentage points is expected. What matters most is whether you reached the same conclusions, and whether you said what they mean for the bank.
+=== SLIDE 2 ===
+STEP 5.1  ·  LOAD, INSPECT AND CLEAN
+Three things in the data needed a decision
+441 missing incomes
+Mostly Self-Employed and Business Owner applicants (11–13% of each). Fill with the median for that employment type — and note that missing income is itself a self-employed pattern.
+1,039 blank credit scores
+Not errors. These are new-to-credit applicants — credit_history_months is 0 for every one. Keep them and flag them with is_ntc. Dropping them removes 9% of applicants.
+12 incomes above ₹6 lakh a month
+All Salaried. Almost certainly annual income entered as monthly. Divide by 12 — or drop them, as long as you say so.
+A cleaning log a bank reviewer could agree with is worth as much as the code.
+2
+=== SLIDE 3 ===
+STEP 5.2  ·  WHAT DRIVES APPROVAL TODAY?
+Below a credit score of 650, the bank almost never approves
+What a strong answer says
+Approval jumps from 4.3% to 32.8% across the 650 line. The bank has an unwritten score floor — a rule a pre-screener can apply with confidence.
+
+New-to-credit applicants are approved 53.9% of the time: the credit team is using judgement here.
+
+Gig / Contract workers are approved least (34.9% vs 58.4% for Salaried).
+"Lower scores get fewer approvals" describes the chart. "Below 650 the bank almost never approves" is a policy finding.
+3
+=== SLIDE 4 ===
+STEP 5.3  ·  AFFORDABILITY FEATURES
+Once EMIs take more than half of income, approvals collapse
+What a strong answer says
+FOIR = (existing EMI + proposed EMI) ÷ monthly income.
+
+Approval falls from 65.4% below 30% FOIR to 15.5% above 55%. The sharpest drop is past 50%.
+
+A policy limit of 50–55% FOIR is what the historical decisions support.
+FOIR turns out to be one of the three strongest drivers in the whole dataset — and you built it yourself.
+4
+=== SLIDE 5 ===
+STEP 5.4  ·  LOGISTIC REGRESSION PRE-SCREENER
+79% accurate — but accuracy is not the number the bank cares about
+Predicted
+Approved
+Declined
+Actually
+Approved
+Actually
+Declined
+1046
+Correctly approved
+225
+Good customers
+wrongly declined
+277
+Declines missed
+852
+Correctly declined
+Test set: 2400 applications  ·  threshold 0.5
+At the default 0.5 cut-off, 225 applicants the bank approved would be turned away — and the model is barely better than a coin toss on new-to-credit applicants.
+5
+=== SLIDE 6 ===
+STEP 5.4  ·  WHAT PUSHES AN APPLICATION TOWARDS DECLINE
+The model learned the same policy you found in Steps 5.2 and 5.3
+Reading it like a credit analyst
+Positive pushes towards decline; negative towards approval.
+
+Higher FOIR, more late payments and being a gig worker push towards decline. A higher credit score and a salaried job pull towards approval.
+
+Because features were scaled, sizes can be compared directly.
+"Every additional missed payment pushes an application towards decline" — say what the coefficient means for an applicant.
+6
+=== SLIDE 7 ===
+STEP 5.5  ·  SETTING THE AUTO-DECLINE THRESHOLD
+The bank sets the risk limit — the model shows where it falls
+0.90 is the lowest threshold within the 5% limit (4.7% wrong). At 0.5, one in five auto-declines would be a good customer.
+7
+=== SLIDE 8 ===
+STEP 5.5  ·  THE BUSINESS CASE
+What a 0.90 threshold is worth every month
+15.2%
+of applications auto-declined
+~456
+applications a month (of 3,000)
+~190 hrs
+analyst time freed (25 min each)
+4.7%
+of auto-declines were good customers
+Why the number is modest — and why that is fine
+A single auto-decline lane at a strict risk limit catches only about 30.7% of all declines. That is still roughly 190 analyst hours a month with very little risk — a safe first step the bank can build on.
+A strong briefing states the threshold, the applications and the hours together — in one sentence.
+8
+=== SLIDE 9 ===
+STEP 5.6  ·  FAIRNESS CHECK
+The raw gap is real — but it comes mostly from income and job mix
+What a strong answer says
+Overall: 54.1% male vs 50.4% female approved. Within Gig and Business Owner, the gap is under 1 point.
+
+Female applicants have lower median income (₹45K vs ₹55K) and are almost twice as likely to be gig workers (21% vs 12%).
+
+The model's auto-decline rate is almost identical by gender.
+Leaving gender out is necessary, not sufficient. Income and job type can act as stand-ins — monitor outcomes by gender after launch.
+9
+=== SLIDE 10 ===
+STEP 5.7  ·  CREDIT POLICY BRIEFING
+What a distinction-level briefing sounds like
+"I recommend auto-declining an application only when the model is at least 90% confident it will be declined. On our test data, that removes about 15.2% of applications — roughly 456 a month, or 190 analyst hours — and fewer than 5% of those would have been approved by the credit team. Two factors drive decisions most: FOIR, where approvals fall from 65.4% below 30% to 15.5% above 55%, and credit score, where approvals are under 5% below 650. The model should not decide on new-to-credit applicants — it is right only 56.7% of the time for them — so they should always go to an analyst. Gender is not used and auto-decline rates are almost identical by gender, but income and job type can act as proxies, so I would report outcomes by gender every month. Before going live, I would want repayment data: today the model copies past analyst decisions, not whether customers actually repaid."
+Threshold · applications and hours · two drivers with numbers · a group to keep with humans · fairness position · one more piece of data.
+10
+=== SLIDE 11 ===
+WHERE SUBMISSIONS LOSE MARKS
+The most common gaps — and what to do instead
+11
+=== SLIDE 12 ===
+What to carry into your next use case
+1
+A model's output is a probability. The decision is a threshold — and the business sets it.
+2
+Translate every result into the stakeholder's units: applications, hours, customers, rupees.
+3
+Always ask who the model should not decide for — and say so plainly.

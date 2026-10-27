@@ -1,0 +1,93 @@
+Calibo AI Academy  ·  Path 2  ·  KLU Batch
+Phase 2 — Mini Use Case 02
+Credit Pre-Screening Engine — Loan Intake Optimisation
+Module: Supervised Learning Part 1 (Regression & Problem Framing)  |  Industry: BFSI — Retail Lending
+1.  A Note Before You Begin
+There is a quote I carry with me, and I want to share it with you again before you start:
+In your first mini use case, you looked back at what had already happened. This time you build something that makes a decision going forward. A model that predicts loan outcomes is not an academic exercise — every threshold you choose decides whether a real person's application is read by a human or turned away by a machine.
+Your job is not to build the most accurate model. Your job is to build the most useful one — a model the Credit Policy Analyst can defend to her Head of Retail Lending, to the analysts whose work it changes, and to the customers it affects. Keep all three in mind as you work.
+2.  Use Case Overview
+3.  Business Context
+A mid-size private bank runs a retail lending unit that offers unsecured personal loans to customers across India — salaried employees, self-employed professionals, small business owners and gig workers, in metros as well as Tier 2 and Tier 3 cities.
+The unit receives roughly 3,000 personal loan applications a month. Every one of them goes through a manual credit review that takes an analyst about 25 minutes. Close to half of all applications end up declined — and a large share of those are decided within the first minute, because the applicant's credit score is very low or their existing EMIs already consume most of their income.
+The Head of Retail Lending has asked the Credit Policy Analyst a direct question: can we use our own history to build a pre-screening model, so analysts spend their time on applications that genuinely need judgement? She has six months of past applications with the final decision recorded for each one. She needs you to tell her what the data says and how far a model can safely be trusted.
+Specifically, the Credit Policy Analyst needs to know:
+4.  Dataset
+You have been provided with a simulated dataset: MUC02_Credit_PreScreening_Dataset.csv. Place it in the same folder as your Jupyter Notebook before you start.
+The dataset has 12,000 loan applications received between April and September 2026. Each row is one application, with the final decision made by the bank's credit analysts. Column reference:
+Load the dataset with: df = pd.read_csv("MUC02_Credit_PreScreening_Dataset.csv")
+5.  What You Will Build
+Your Jupyter Notebook should work through the steps below in sequence. Each step has two parts — the code, and a markdown cell in plain English explaining what you did and what you found. The markdown cells are not optional; they are half the assignment.
+5.1  Load, inspect and clean
+Check the shape, data types and null values. Calculate the overall approval rate — this tells you how balanced your target is. Then look closely at three things and decide how to handle each one:
+monthly_income has missing values. Which employment types are they concentrated in? Choose a sensible way to fill them and justify it.
+credit_score is blank for some applicants. Check credit_history_months for those rows. Are these errors, or do they mean something? Do not drop them.
+Look at the maximum of monthly_income. A small number of values look implausible for a monthly figure. What is the most likely explanation, and what will you do about them?
+In your markdown, record every cleaning decision and the reason for it. A reviewer at a bank should be able to read your notes and agree with each choice.
+5.2  What drives approval today?
+Before building any model, find out what the credit team actually does. Group credit_score into bands — below 600, 600–649, 650–699, 700–749, 750–799 and 800+ — plus a separate "No score" group, and plot the approval rate for each. Then plot the approval rate by employment_type.
+In your markdown, answer: is there a score below which applications are almost never approved? What does that tell you about the bank's unwritten credit policy? How do applicants with no credit score fare compared to scored applicants?
+5.3  Engineer the affordability features
+Create three new columns:
+foir = (existing_emi + proposed_emi) / monthly_income
+loan_to_income = loan_amount / (monthly_income × 12)
+is_ntc — 1 if the applicant has no credit score (new to credit), otherwise 0
+Group FOIR into bands — below 30%, 30–40%, 40–50%, 50–55% and above 55% — and plot the approval rate for each band.
+In your markdown, answer: at what FOIR level do approvals fall sharply? If you were writing this into a credit policy, what FOIR limit would you propose?
+5.4  Build the logistic regression pre-screener
+Set your target as 1 if the application was Declined, 0 if Approved — the model is predicting declines. Use these features: credit_score, is_ntc, foir, loan_to_income, delinquencies_24m, num_active_loans, years_in_current_job, age, tenure_months, city_tier, employment_type and loan_purpose.
+Do not use application_id, application_date, city, gender or decision as features.
+Fill blank credit scores with the median — the is_ntc flag tells the model which ones were filled.
+One-hot encode employment_type and loan_purpose. Scale the numeric features.
+Split 80/20 with stratify=y and random_state=42 so results are comparable across the batch.
+Report accuracy, the confusion matrix, and precision and recall for the Declined class. Then list the five features with the largest coefficients.
+In your markdown, explain the confusion matrix in business language: how many creditworthy applicants would this model have wrongly declined? Then explain the top coefficients the way you would to a credit analyst — which factors push an application towards decline?
+5.5  Set the auto-decline threshold
+A model that declines everyone it predicts as "Declined" at the default 0.5 cut-off will turn away many good customers. Instead, the bank will only auto-decline when the model is very confident. Using predict_proba on your test set, build a table for thresholds of 0.5, 0.6, 0.7, 0.8, 0.85, 0.9 and 0.95 showing:
+The percentage of applications that would be auto-declined
+Of those auto-declined, the percentage that were actually approved by the credit team (wrongly declined)
+Plot both lines against the threshold on one chart.
+The bank's risk appetite is that no more than 5% of auto-declined applications may be ones the credit team would have approved. Choose the threshold that meets this rule while auto-declining as many applications as possible.
+In your markdown, translate your threshold into the monthly business case: with 3,000 applications a month and 25 minutes per manual review, how many applications and how many analyst hours does it free up?
+5.6  Fairness check
+You did not use gender as a feature. That does not automatically make the model fair. Check three things:
+The historical approval rate by gender, overall and within each employment type
+The median monthly income and the share of Gig / Contract workers by gender
+The auto-decline rate by gender from your model at the threshold you chose in Step 5.5
+In your markdown, answer in 3–4 sentences: is there a gap in the historical data? What explains it? Does your model widen it, narrow it, or leave it unchanged? Should gender ever be used as a feature in a credit model — and does leaving it out fully solve the problem?
+5.7  Your briefing to the Credit Policy Analyst
+Close your notebook with a markdown cell titled "Credit Policy Briefing." Write 4–6 sentences you would actually say to the Credit Policy Analyst before she meets the Head of Retail Lending. Cover:
+The threshold you recommend, and what it means in applications and analyst hours per month
+The two factors that drive decisions most strongly, with a number from your analysis for each
+One group of applicants where the model should not be trusted yet, and why
+Your position on fairness, and one additional piece of data you would want before going live
+6.  CBIM Problem Canvas
+Every mini use case begins with a Problem Canvas — completed before you write a single line of code.
+Submit the completed canvas as a clearly formatted section at the top of your notebook — labelled "CBIM Problem Canvas" — or as a separate document alongside your notebook.
+7.  Deliverables
+If you are working individually
+How your work will be evaluated
+If you are working in a group of 2–3
+For a 2-person team: Person A takes Steps 5.1–5.3 and the CBIM canvas. Person B takes Steps 5.4–5.7. Both review before submitting.
+8.  A Few Things Worth Flagging
+9.  Before You Submit
+Individual
+Dataset CSV and notebook in the same local folder
+Required libraries installed: pandas, numpy, matplotlib, seaborn, scikit-learn, jupyter
+CBIM Problem Canvas completed — all six fields — before any code was written
+Notebook runs end-to-end without errors (kernel restart + run all cells done)
+All seven steps present with both code and a markdown explanation in each
+Every cleaning decision in Step 5.1 is written down with a reason
+Step 5.5 states the chosen threshold and the monthly impact in applications and hours
+Step 5.7 Credit Policy Briefing answers all four points with specific figures
+Insight summary submitted (max 400 words)
+Files named: [YourName]_MUC02_KLU_Notebook.ipynb and [YourName]_MUC02_KLU_Summary.docx
+Group
+Dataset CSV and notebook in the same folder on the machine used for final assembly
+CBIM canvas completed together — all members contributed, all fields answered
+Each step's markdown credits the team member who built that section
+Notebook runs end-to-end — tested by a member who did not write that section
+Chart style is consistent across all sections — same palette, same labelling convention
+The final briefing references findings from other members' sections specifically
+Individual 150-word reflection submitted separately by each team member
+Files named: [TeamName]_MUC02_KLU_Notebook.ipynb and [TeamName]_MUC02_KLU_Summary.docx

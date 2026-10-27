@@ -1,0 +1,29 @@
+Calibo AI Academy  ·  Trainer Reference  ·  Not for student distribution
+MUC02 — Trainer Notes
+Credit Pre-Screening Engine — Loan Intake Optimisation  ·  Path 2, KLU Batch
+Phase 2 — Supervised Learning Part 1  |  BFSI — Retail Lending
+1.  Before the Session
+2.  Dataset Notes
+The dataset is the same file for both the KLU Path 2 and Path 3 batches. This is intentional — cross-batch consistency at the data and stakeholder level, as with MUC01. Both batches answer to the same Credit Policy Analyst. Path 3 students go further: they compare four models and design a two-lane pre-screener. KLU students stop at a single logistic regression and one auto-decline threshold.
+12,000 applications, April–September 2026, 19 columns. Overall approval rate: 52.9%. The target is reasonably balanced, so accuracy is not misleading on its own — but students should still be pushed past accuracy towards the cost of wrong declines.
+2.1  Planted data issues (Step 5.1)
+2.2  Key patterns students must find
+3.  Reference Results
+3.1  Logistic regression (Step 5.4)
+Largest coefficients (scaled features; positive = pushes towards decline): FOIR (+1.22), credit score (−1.01), delinquencies in 24 months (+0.98), Gig / Contract (+0.64), Debt Consolidation purpose (+0.51), Salaried (−0.42), new-to-credit flag (+0.38).
+3.2  Threshold table (Step 5.5)
+The teaching point: at the default 0.5, the model would auto-decline 44.9% of applications but 20.9% of them would be people the bank actually approved. The bank sets the threshold from its risk appetite, not from the model.
+3.3  Fairness (Step 5.6)
+At the 0.80–0.90 range, the model's auto-decline rate is almost identical by gender (about 24.1% female vs 23.1% male at 0.80). The model does not widen the historical gap. Distinction-level students note that income and employment type can act as proxies, that leaving gender out does not by itself guarantee fairness, and that outcomes by gender should be monitored after launch.
+4.  Step-by-Step Coaching Notes
+5.1 — Load, inspect and clean
+5.2 — What drives approval today?
+5.3 — Affordability features
+5.4 — Logistic regression
+5.5 — Threshold
+5.6 — Fairness
+5.7 — Credit Policy Briefing
+5.  CBIM Canvas — What to Look For
+6.  Grading Reference
+7.  Common Student Questions
+For questions not covered here, use your judgement and align with the programme lead if needed.

@@ -1,0 +1,89 @@
+SHAPE: (12000, 19)
+
+COLUMNS:
+application_id
+application_date
+age
+gender
+city
+city_tier
+employment_type
+years_in_current_job
+monthly_income
+existing_emi
+credit_score
+credit_history_months
+num_active_loans
+delinquencies_24m
+loan_purpose
+loan_amount
+tenure_months
+proposed_emi
+decision
+
+DTYPES:
+application_id               str
+application_date             str
+age                        int64
+gender                       str
+city                         str
+city_tier                  int64
+employment_type              str
+years_in_current_job     float64
+monthly_income           float64
+existing_emi             float64
+credit_score             float64
+credit_history_months      int64
+num_active_loans           int64
+delinquencies_24m          int64
+loan_purpose                 str
+loan_amount              float64
+tenure_months              int64
+proposed_emi             float64
+decision                     str
+dtype: object
+
+MISSING VALUES:
+application_id              0
+application_date            0
+age                         0
+gender                      0
+city                        0
+city_tier                   0
+employment_type             0
+years_in_current_job        0
+monthly_income            441
+existing_emi                0
+credit_score             1039
+credit_history_months       0
+num_active_loans            0
+delinquencies_24m           0
+loan_purpose                0
+loan_amount                 0
+tenure_months               0
+proposed_emi                0
+decision                    0
+dtype: int64
+
+HEAD (3 rows):
+  application_id application_date  age  gender       city  city_tier employment_type  years_in_current_job  monthly_income  existing_emi  credit_score  credit_history_months  num_active_loans  delinquencies_24m     loan_purpose  loan_amount  tenure_months  proposed_emi  decision
+0      APP100001       2026-04-01   28    Male  Hyderabad          1        Salaried                   4.1         95000.0       23500.0         784.0                    109                 2                  0  Home Renovation     240000.0             48        6600.0  Approved
+1      APP100002       2026-04-01   36  Female     Raipur          3  Business Owner                   0.6         43000.0        8500.0         790.0                    162                 2                  0          Wedding     145000.0             36        5000.0  Approved
+2      APP100003       2026-04-01   35    Male     Nagpur          2        Salaried                   4.4         35000.0        3500.0         718.0                    151                 1                  1          Medical     345000.0             36       11800.0  Approved
+
+TARGET (last col) value counts:
+decision
+Approved    6353
+Declined    5647
+Name: count, dtype: int64
+
+DESCRIBE:
+                age     city_tier  years_in_current_job  monthly_income  existing_emi  credit_score  credit_history_months  num_active_loans  delinquencies_24m   loan_amount  tenure_months  proposed_emi
+count  12000.000000  12000.000000          12000.000000    1.155900e+04  12000.000000  10961.000000           12000.000000      12000.000000       12000.000000  1.200000e+04   12000.000000   12000.00000
+mean      33.153750      1.707917              3.774850    6.031486e+04   6273.166667    725.920080             114.880167          1.166000           0.775750  3.795925e+05      37.726000   15067.10000
+std        7.058878      0.757728              3.149578    4.889083e+04   8526.169300     62.559023              77.329483          1.148356           1.227024  2.950731e+05      15.077131   15160.83502
+min       21.000000      1.000000              0.000000    1.200000e+04      0.000000    479.000000               0.000000          0.000000           0.000000  5.000000e+04      12.000000    1200.00000
+25%       28.000000      1.000000              1.500000    3.350000e+04      0.000000    684.000000              54.000000          0.000000           0.000000  1.750000e+05      24.000000    6000.00000
+50%       33.000000      2.000000              3.000000    5.050000e+04   4000.000000    726.000000             114.000000          1.000000           0.000000  3.000000e+05      36.000000   10600.00000
+75%       38.000000      2.000000              5.100000    7.475000e+04   8500.000000    769.000000             169.000000          2.000000           1.000000  4.900000e+05      48.000000   18700.00000
+max       60.000000      3.000000             30.000000    1.656000e+06  96500.000000    890.000000             395.000000          8.000000          11.000000  2.500000e+06      60.000000  224500.00000

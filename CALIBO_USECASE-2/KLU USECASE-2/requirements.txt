@@ -1,0 +1,12 @@
+pandas>=1.5
+numpy>=1.23
+matplotlib>=3.6
+seaborn>=0.12
+scikit-learn>=1.2
+plotly>=5.13
+streamlit>=1.22
+xgboost>=1.7
+lightgbm>=3.3
+shap>=0.41
+joblib>=1.2
+openpyxl>=3.0

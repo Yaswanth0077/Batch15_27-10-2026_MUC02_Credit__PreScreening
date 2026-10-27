@@ -1,0 +1,26 @@
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated charts (recreated when notebooks run)
+*.png
+
+# Build helper scripts (not needed for deployment)
+build_notebook1.py
+build_notebook2.py
+build_master.py
+merge.py
+merge_error.log
+m_tmp.json
+task.md
+
+# Streamlit secrets
+.streamlit/secrets.toml
